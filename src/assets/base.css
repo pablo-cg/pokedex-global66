@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@500&display=swap');
+
+:root {
+  --color-yellow: #eca539;
+  --color-crimson: #c00e20;
+  --color-tomato: #f22539;
+  --color-dark: #353535;
+  --color-darkgrey: #5e5e5e;
+  --color-grey: #bfbfbf;
+  --color-lightgrey: #e8e8e8;
+  --color-lightergrey: #f5f5f5;
+  --color-light: #f9f9f9;
+  --color-background-transparent: rgba(53, 53, 53, .7);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  font-weight: normal;
+}
+
+html,
+body {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  background-color: var(--color-light);
+  color: var(--color-dark);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1.5rem 2rem 1.5rem;
+  gap: 2rem;
+  height: 100%;
+  overflow: scroll;
+}
+
+.container {
+  height: calc(100vh - 80px);
+}
+
+.footer {
+  background-color: white;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  margin-top: auto;
+}
