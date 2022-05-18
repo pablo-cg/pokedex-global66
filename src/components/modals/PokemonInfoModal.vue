@@ -1,10 +1,11 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import FavoriteStar from '../layout/FavoriteStar.vue'
+
 const emit = defineEmits(['close'])
 
 const props = defineProps({
-  pokemon: Object,
+  pokemon: Object
 })
 
 const favoriteColor = computed(() => {
@@ -12,8 +13,10 @@ const favoriteColor = computed(() => {
   return pokemon?.isFavorite ? '#eca539' : '#bfbfbf'
 })
 
-function setFavorite() {
-  console.log(props.pokemon)
+function copyAttribs() {
+  const { name, weight, height, types } = props.pokemon
+  const attribs = `name: ${name}, weight: ${weight}, height: ${height}, types: ${types?.join()}`
+  navigator.clipboard.writeText(attribs)
 }
 </script>
 
@@ -33,10 +36,10 @@ function setFavorite() {
           <li><strong>Name: </strong>{{ pokemon?.name }}</li>
           <li><strong>Weight: </strong>{{ pokemon?.weight }}</li>
           <li><strong>Height: </strong>{{ pokemon?.height }}</li>
-          <li><strong>Types: </strong>{{ pokemon?.types }}</li>
+          <li><strong>Types: </strong>{{ pokemon?.types?.join(', ') }}</li>
         </ul>
         <section class="actions">
-          <Button label="Share to my friends" @click="setFavorite" active />
+          <Button label="Share to my friends" @click="copyAttribs" active />
           <div class="star">
             <FavoriteStar :color="favoriteColor" />
           </div>
@@ -90,6 +93,7 @@ function setFavorite() {
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
+  max-height: 230px;
 }
 
 .content {
@@ -112,6 +116,7 @@ function setFavorite() {
   border-bottom: solid var(--color-lightgrey) 1px;
   padding: 0.8rem 0;
   padding-left: 5px;
+  text-transform: capitalize;
 }
 
 .content ul strong {
@@ -120,7 +125,7 @@ function setFavorite() {
 
 .pokemon-img {
   max-width: 60%;
-  max-height: 100%;
+  min-height: 230px;
   padding: 1rem 0;
 }
 
