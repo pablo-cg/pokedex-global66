@@ -1,3 +1,12 @@
+<script setup>
+defineProps({
+  color: {
+    type: String,
+    default: 'black',
+  },
+})
+</script>
+
 <template>
   <svg
     width="26"
@@ -11,12 +20,3 @@
     />
   </svg>
 </template>
-
-<script setup>
-defineProps({
-  color: {
-    type: String,
-    default: 'black',
-  },
-})
-</script>

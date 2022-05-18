@@ -1,12 +1,3 @@
-<template>
-  <main class="item">
-    <span class="label">{{ pokemon?.name }}</span>
-    <div class="star">
-      <FavoriteStar :color="favoriteColor" />
-    </div>
-  </main>
-</template>
-
 <script setup>
 import { computed } from 'vue'
 import FavoriteStar from './FavoriteStar.vue'
@@ -19,6 +10,15 @@ const favoriteColor = computed(() => {
   return pokemon?.isFavorite ? '#eca539' : '#bfbfbf'
 })
 </script>
+
+<template>
+  <main class="item">
+    <span class="label">{{ pokemon?.name }}</span>
+    <div class="star">
+      <FavoriteStar :color="favoriteColor" />
+    </div>
+  </main>
+</template>
 
 <style scoped>
 .item {

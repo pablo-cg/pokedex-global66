@@ -1,10 +1,3 @@
-<template>
-  <div class="form-group">
-    <img class="magnifier" src="@/assets/img/search-icon.png" />
-    <input class="search" type="text" placeholder="Search" v-model="value" />
-  </div>
-</template>
-
 <script setup>
 import { computed } from 'vue'
 
@@ -22,6 +15,13 @@ const value = computed({
   },
 })
 </script>
+
+<template>
+  <div class="form-group">
+    <img class="magnifier" src="@/assets/img/search-icon.png" />
+    <input class="search" type="text" placeholder="Search" v-model="value" />
+  </div>
+</template>
 
 <style scoped>
 .form-group {

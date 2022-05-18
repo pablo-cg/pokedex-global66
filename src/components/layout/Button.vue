@@ -1,17 +1,17 @@
+<script setup>
+defineProps({
+  label: String,
+  iconSrc: String,
+  active: Boolean
+})
+</script>
+
 <template>
   <button class="btn" :class="active ? 'active' : ''">
     <img v-if="iconSrc" :src="iconSrc" alt="" width="22" height="22" />
     <span>{{ label }}</span>
   </button>
 </template>
-
-<script setup>
-defineProps({
-  label: String,
-  iconSrc: String,
-  active: Boolean,
-})
-</script>
 
 <style scoped>
 .btn {

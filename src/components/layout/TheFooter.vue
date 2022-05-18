@@ -1,3 +1,16 @@
+<script setup>
+import { useRoute, useRouter } from 'vue-router'
+import starIcon from '@/assets/img/star-icon.png'
+import listIcon from '@/assets/img/list-icon.png'
+
+const route = useRoute()
+const router = useRouter()
+
+function to(path) {
+  router.push(`/pokemons/${path}`)
+}
+</script>
+
 <template>
   <footer>
     <Button
@@ -14,19 +27,6 @@
     />
   </footer>
 </template>
-
-<script setup>
-import { useRoute, useRouter } from 'vue-router'
-import starIcon from '@/assets/img/star-icon.png'
-import listIcon from '@/assets/img/list-icon.png'
-
-const route = useRoute()
-const router = useRouter()
-
-function to(path) {
-  router.push(`/pokemons/${path}`)
-}
-</script>
 
 <style scoped>
 footer {
