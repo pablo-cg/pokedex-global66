@@ -1,14 +1,18 @@
 <script setup>
-import { computed } from 'vue'
-import FavoriteStar from './FavoriteStar.vue'
+import { computed } from "vue";
+import FavoriteStar from "./FavoriteStar.vue";
+import { usePokemonStore } from "@/stores/pokemon";
 const props = defineProps({
   pokemon: Object,
-})
+});
+
+const store = usePokemonStore();
 
 const favoriteColor = computed(() => {
-  const { pokemon } = props
-  return pokemon?.isFavorite ? '#eca539' : '#bfbfbf'
-})
+  return store.favoritePokemons.find((p) => p.name === props.pokemon?.name)
+    ? "#eca539"
+    : "#bfbfbf";
+});
 </script>
 
 <template>
