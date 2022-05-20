@@ -22,6 +22,12 @@ const router = createRouter({
           },
         },
         {
+          path: 'home',
+          redirect:{
+            name: 'home'
+          },
+        },
+        {
           path: 'all',
           name: 'all-pokemons',
           component: () => import('../components/views/PokemonList.vue'),
