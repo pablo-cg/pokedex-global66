@@ -3,6 +3,7 @@ import PokemonListItem from '../layout/PokemonListItem.vue'
 import PokemonInfoModal from '../modals/PokemonInfoModal.vue'
 import { onMounted, ref } from 'vue'
 import { usePokeAPI } from '@/services/index'
+import { useDebounceFn } from '@vueuse/core'
 
 const { getAllPokemons, getPokemon } = usePokeAPI()
 
@@ -13,21 +14,30 @@ const selectedPokemon = ref()
 let nextPage
 let previousPage
 
-async function getData() {
-  if (searchInput.value) {
-    await getPokemon(searchInput.value).then((res) => {
-      pokemons.value = [{ name: res.data?.name }]
-    })
-  } else {
-    await getAllPokemons().then((res) => {
-      const { results, next, previous } = res.data
-      nextPage = next
-      previousPage = previous
-      pokemons.value = results.map((r) => {
-        return { name: r.name }
+const search = useDebounceFn(
+  async () => {
+    if (searchInput.value) {
+      const pokemon = searchInput.value.toLowerCase()
+      await getPokemon(pokemon).then((res) => {
+        pokemons.value = [{ name: res.data?.name }]
       })
+    } else {
+      await getData()
+    }
+  },
+  1000,
+  { maxWait: 3000 }
+)
+
+async function getData() {
+  await getAllPokemons().then((res) => {
+    const { results, next, previous } = res.data
+    nextPage = next
+    previousPage = previous
+    pokemons.value = results.map((r) => {
+      return { name: r.name }
     })
-  }
+  })
 }
 
 async function getInfoPokemon(pokemon) {
@@ -57,7 +67,7 @@ onMounted(async () => {
 
 <template>
   <div class="main">
-    <SearchInput v-model="searchInput" @input="getData" />
+    <SearchInput v-model="searchInput" @input="search" />
     <NoData
       btn-label="Go back home"
       push-to="home"
