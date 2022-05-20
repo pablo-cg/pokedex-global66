@@ -1,10 +1,15 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
 import FavoriteStar from '../layout/FavoriteStar.vue'
+import { computed, onMounted, ref } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import { usePokemonStore } from '@/stores/pokemon'
 
 const emit = defineEmits(['close'])
 const store = usePokemonStore()
+
+const target = ref(null)
+
+onClickOutside(target, () => emit('close'))
 
 const props = defineProps({
   pokemon: Object
@@ -41,7 +46,7 @@ function setFavorite(value) {
 
 <template>
   <div class="modal-container">
-    <div class="modal">
+    <div class="modal" ref="target">
       <header class="header">
         <img :src="pokemon?.img" class="pokemon-img" />
         <img
