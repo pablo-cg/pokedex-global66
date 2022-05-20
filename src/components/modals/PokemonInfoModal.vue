@@ -1,22 +1,41 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue'
 import FavoriteStar from '../layout/FavoriteStar.vue'
+import { usePokemonStore } from '@/stores/pokemon'
 
 const emit = defineEmits(['close'])
+const store = usePokemonStore()
 
 const props = defineProps({
   pokemon: Object
 })
 
+function join(array) {
+  return array?.join(', ')
+}
+
+function isFavorite(pokemon) {
+  return store.favoritePokemons.find((p) => p.name === pokemon.name)
+}
+
 const favoriteColor = computed(() => {
-  const { pokemon } = props
-  return pokemon?.isFavorite ? '#eca539' : '#bfbfbf'
+  return isFavorite(props.pokemon) ? '#eca539' : '#bfbfbf'
 })
 
 function copyAttribs() {
   const { name, weight, height, types } = props.pokemon
-  const attribs = `name: ${name}, weight: ${weight}, height: ${height}, types: ${types?.join()}`
+  const attribs = `name: ${name}, weight: ${weight}, height: ${height}, types: ${join(
+    types
+  )}`
   navigator.clipboard.writeText(attribs)
+}
+
+function setFavorite(value) {
+  if (isFavorite(value)) {
+    store.removeFavorite(value)
+  } else {
+    store.addFavorite(value)
+  }
 }
 </script>
 
@@ -36,13 +55,13 @@ function copyAttribs() {
           <li><strong>Name: </strong>{{ pokemon?.name }}</li>
           <li><strong>Weight: </strong>{{ pokemon?.weight }}</li>
           <li><strong>Height: </strong>{{ pokemon?.height }}</li>
-          <li><strong>Types: </strong>{{ pokemon?.types?.join(', ') }}</li>
+          <li><strong>Types: </strong>{{ join(pokemon?.types) }}</li>
         </ul>
         <section class="actions">
           <Button label="Share to my friends" @click="copyAttribs" active />
-          <div class="star">
+          <button class="star-btn" @click="setFavorite(pokemon)">
             <FavoriteStar :color="favoriteColor" />
-          </div>
+          </button>
         </section>
       </main>
     </div>
@@ -61,6 +80,7 @@ function copyAttribs() {
   margin: 1rem;
   cursor: pointer;
 }
+
 .modal-container {
   position: fixed;
   display: flex;
@@ -135,7 +155,8 @@ function copyAttribs() {
   padding: 0 2rem;
 }
 
-.star {
+.star-btn {
+  border: none;
   background-color: var(--color-lightergrey);
   width: 44px;
   height: 44px;
