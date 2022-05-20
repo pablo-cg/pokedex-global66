@@ -3,7 +3,7 @@ import PokemonInfoModal from '../modals/PokemonInfoModal.vue'
 import PokemonListItem from '../layout/PokemonListItem.vue'
 import CallToAction from '@/components/layout/CallToAction.vue'
 import { usePokemonStore } from '../../stores/pokemon'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const store = usePokemonStore()
 
@@ -20,6 +20,12 @@ function getInfoPokemon(value) {
   selectedPokemon.value = value
   isModalOpen.value = true
 }
+
+const pokemons = computed(() => {
+  return store.favoritePokemons.filter((pokemon) =>
+    pokemon.name.includes(searchInput.value)
+  )
+})
 </script>
 
 <template>
@@ -33,7 +39,7 @@ function getInfoPokemon(value) {
     />
     <div class="poke-list" v-else>
       <PokemonListItem
-        v-for="poke in store.favoritePokemons"
+        v-for="poke in pokemons"
         :key="poke.name"
         :pokemon="poke"
         class="pokemon"
