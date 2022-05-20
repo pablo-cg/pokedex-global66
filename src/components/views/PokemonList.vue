@@ -1,9 +1,8 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import FavoriteStar from '../layout/FavoriteStar.vue'
 import PokemonListItem from '../layout/PokemonListItem.vue'
-import { usePokeAPI } from '@/services/index'
 import PokemonInfoModal from '../modals/PokemonInfoModal.vue'
+import { onMounted, ref } from 'vue'
+import { usePokeAPI } from '@/services/index'
 
 const { getAllPokemons, getPokemon } = usePokeAPI()
 
@@ -15,12 +14,20 @@ let nextPage
 let previousPage
 
 async function getData() {
-  await getAllPokemons().then((res) => {
-    const { results, next, previous } = res.data
-    nextPage = next
-    previousPage = previous
-    pokemons.value = results
-  })
+  if (searchInput.value) {
+    await getPokemon(searchInput.value).then((res) => {
+      pokemons.value = [{ name: res.data?.name }]
+    })
+  } else {
+    await getAllPokemons().then((res) => {
+      const { results, next, previous } = res.data
+      nextPage = next
+      previousPage = previous
+      pokemons.value = results.map((r) => {
+        return { name: r.name }
+      })
+    })
+  }
 }
 
 async function getInfoPokemon(pokemon) {
@@ -50,8 +57,14 @@ onMounted(async () => {
 
 <template>
   <div class="main">
-    <SearchInput v-model="searchInput" />
-    <div class="poke-list">
+    <SearchInput v-model="searchInput" @input="getData" />
+    <NoData
+      btn-label="Go back home"
+      push-to="home"
+      description="You don't have any favorites, why don't you add some?"
+      v-if="!pokemons.length"
+    />
+    <div class="poke-list" v-else>
       <PokemonListItem
         v-for="poke in pokemons"
         :key="poke.name"
@@ -69,11 +82,3 @@ onMounted(async () => {
     </Teleport>
   </div>
 </template>
-
-<style scoped>
-.poke-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-</style>
