@@ -2,14 +2,15 @@
 defineProps({
   label: String,
   iconSrc: String,
-  active: Boolean
+  active: Boolean,
+  normal: Boolean
 })
 </script>
 
 <template>
   <button class="btn" :class="active ? 'active' : ''">
     <img v-if="iconSrc" :src="iconSrc" alt="" width="22" height="22" />
-    <span>{{ label }}</span>
+    <span :class="normal ? 'normal' : 'thick'">{{ label }}</span>
   </button>
 </template>
 
@@ -32,9 +33,16 @@ defineProps({
   background-color: var(--color-tomato);
 }
 
+.normal {
+  font-weight: 400;
+}
+
+.thick {
+  font-weight: 700;
+}
+
 span {
   color: var(--color-light);
-  font-weight: 700;
   font-size: 1rem;
 }
 
