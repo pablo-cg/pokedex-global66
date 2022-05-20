@@ -31,8 +31,17 @@ function to(path) {
 <style scoped>
 footer {
   height: 80px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+
+@media (min-width: 1024px){
+  footer{
+    height: 90px;
+    max-width: 1024px;
+    justify-content: space-between;
+  }
 }
 </style>

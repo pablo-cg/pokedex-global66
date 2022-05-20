@@ -50,4 +50,14 @@ span {
 .btn:active {
   background-color: var(--color-crimson);
 }
+
+@media (min-width: 1024px) {
+  .btn{
+    width: 300px;
+  }
+
+  span{
+    font-size: 1.2rem;
+  }
+}
 </style>

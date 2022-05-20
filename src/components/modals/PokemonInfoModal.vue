@@ -171,4 +171,29 @@ function setFavorite(value) {
   border-radius: 50%;
   cursor: pointer;
 }
+
+@media (min-width: 1024px) {
+  .modal {
+    width: 52.5vw;
+    height: 78vh;
+    gap: 2rem;
+  }
+
+  .header {
+    min-height: 50%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .pokemon-img {
+    max-width: 60%;
+    max-height: 100%;
+  }
+
+  .content {
+    font-size: 1.3rem;
+    gap: 2rem;
+    padding: 0 1.5rem;
+  }
+}
 </style>

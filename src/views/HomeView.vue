@@ -23,8 +23,8 @@ function start() {
 </template>
 <style scoped>
 body {
-  max-width: 100vw;
-  max-height: 100vh;
+  width: 100vw;
+  height: 100vh;
 }
 
 .home {
@@ -41,8 +41,8 @@ body {
 }
 
 .logo {
-  height: 100%;
-  width: 100%;
+  max-height: 100%;
+  max-width: 100%;
 }
 
 .content {

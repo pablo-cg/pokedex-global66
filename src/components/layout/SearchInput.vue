@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 
 const props = defineProps({
-  modelValue: String,
+  modelValue: String
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -12,19 +12,19 @@ const value = computed({
   },
   set(value) {
     emit('update:modelValue', value)
-  },
+  }
 })
 </script>
 
 <template>
-  <div class="form-group">
+  <div class="group">
     <img class="magnifier" src="@/assets/img/search-icon.png" />
     <input class="search" type="text" placeholder="Search" v-model="value" />
   </div>
 </template>
 
 <style scoped>
-.form-group {
+.group {
   width: 100%;
   height: 2.5rem;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.04);
@@ -42,17 +42,36 @@ const value = computed({
   outline: none;
   font-size: 1rem;
   line-height: 140%;
+  background-color: white;
   color: var(--color-dark);
   flex: 1;
+  display: block;
 }
 
 .search:focus {
   border: none;
+  background-color: white;
 }
 
 .magnifier {
   margin-left: 0.8rem;
   width: 18px;
   height: 18px;
+}
+
+@media (min-width: 1024px) {
+  .group, .search {
+    height: 3.2rem;
+  }
+
+  .search {
+    font-size: 1.2rem;
+  }
+
+  .magnifier {
+    margin-left: 1.1rem;
+    width: 20px;
+    height: 20px;
+  }
 }
 </style>
